@@ -8,7 +8,7 @@ import Practice from "./pages/Practice";
 
 import MainLayout from "./Layouts/MainLayouts";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Contact from "./pages/Contact";
+// import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="practice" element={<Practice />} />
-          <Route path="contact" element={<Contact />} />
+          {/* <Route path="contact" element={<Contact />} /> */}
 
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
