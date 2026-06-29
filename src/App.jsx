@@ -8,7 +8,7 @@ import Practice from "./pages/Practice";
 
 import MainLayout from "./Layouts/MainLayouts";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Contact from "./pages/contact";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
