@@ -934,6 +934,9 @@ video {
 @media (max-width: 991px) {
   .chat-container {
     flex-direction: column;
+    height: auto;
+    gap: 12px;
+    padding: 12px;
   }
 
   .sidebar,
@@ -944,6 +947,11 @@ video {
 
   .sidebar {
     padding: 18px 16px;
+    max-height: calc(100vh - 120px);
+  }
+
+  .chat-box {
+    min-height: calc(100vh - 145px);
   }
 
   .sidebar-profile {
@@ -956,23 +964,42 @@ video {
 
   .chat-input {
     padding: 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .chat-input input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .chat-input button {
+    flex: 0 1 auto;
+    width: auto;
   }
 
   .message {
     max-width: 82%;
   }
+
+  .back-btn {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
 }
 
 @media (max-width: 500px) {
   .chat-input {
-    flex-wrap: wrap;
-  }
-
-  .chat-input input[type="text"] {
-    width: 100%;
+    padding: 12px;
   }
 
   .chat-input button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .chat-input button.send-btn,
+  .chat-input button.emoji-btn {
     flex: 1;
   }
 }

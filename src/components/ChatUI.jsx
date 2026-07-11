@@ -71,13 +71,21 @@ export default function ChatUI() {
     function handleResize() {
       const mobile = window.innerWidth < 991;
       setIsMobile(mobile);
-      setShowChatOnMobile(!mobile);
+      if (!mobile) {
+        setShowChatOnMobile(true);
+      }
     }
 
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (isMobile && activeUser) {
+      setShowChatOnMobile(true);
+    }
+  }, [activeUser, isMobile]);
 
   /* USERS */
   useEffect(() => {
@@ -666,7 +674,10 @@ export default function ChatUI() {
           <input
             value={text}
             onChange={e => setText(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && sendMessage()}
+            onFocus={() => {
+              if (isMobile) setShowChatOnMobile(true);
+            }}
+            onKeyDown={e => e.key === "Enter" && !e.shiftKey && sendMessage()}
             placeholder={messageLimitReached ? "Message access limit reached" : "Type a message..."}
             disabled={messageLimitReached}
           />
