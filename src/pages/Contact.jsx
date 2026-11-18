@@ -1,11 +1,12 @@
 import { toast } from "react-toastify";
 import ContactForm from "../components/ContactForm";
+import { apiRequest } from "../lib/api";
 
 export default function Contact(){
      async function handlecontactform(formData)
         {
             try {
-            const resp = await fetch(`${import.meta.env.VITE_API_URL}/contact`,{
+            await apiRequest("/contact",{
                 method:"post",
                 headers:{
                     "content-type":"application/json"
@@ -13,18 +14,11 @@ export default function Contact(){
                 body:JSON.stringify(formData)
             });
 
-            const data = await resp.json();
-
-            if(resp.ok){
-                toast.success("Message sent successfully");
-            }
-            else{
-                toast.error(data.msg || "Message sending failed");
-            }
+            toast.success("Message sent successfully");
 
         } catch (err) {
             console.error(err);
-            alert("Server not reachable");
+            toast.error(err.message || "Server not reachable");
         }
     }
 

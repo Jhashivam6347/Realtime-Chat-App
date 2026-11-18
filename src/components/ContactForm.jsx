@@ -13,52 +13,47 @@ export default function ContactForm({ onSubmit }) {
   }
 
   function handleSubmit(e) {
-    e.preventDefault(); // 🔥 stop page reload
+    e.preventDefault();
     onSubmit(form);
-    setForm({ name: "", email: "", phone: "", address: "", comment: "" }); // 🔥 send data to parent
+    setForm({ name: "", email: "", phone: "", address: "", comment: "" });
   }
   return (
-    <div className="contact-form auth-container app-shell">
-      <form className="auth-card" onSubmit={handleSubmit}>
-        <h2 className="auth-title">Contact Us</h2>
-        <label htmlFor="name" className="auth-label">
-          Name:
+    <div className="w-full px-4 py-8 sm:px-6">
+      <form className="mx-auto flex w-full max-w-xl flex-col gap-4 rounded-3xl border border-white/50 bg-white/80 p-6 text-left shadow-2xl backdrop-blur-xl sm:p-8" onSubmit={handleSubmit}>
+        <h2 className="text-2xl font-bold text-slate-900">Contact Us</h2>
+        {[
+          ["name", "Name", "text", "Enter name"],
+          ["email", "Email", "email", "Enter email"],
+          ["phone", "Phone", "tel", "Enter phone"],
+          ["address", "Address", "text", "Enter address"],
+        ].map(([field, label, type, placeholder]) => (
+          <label key={field} htmlFor={field} className="flex flex-col gap-1.5 text-sm font-medium text-slate-700">
+            {label}
+            <input
+              type={type}
+              id={field}
+              name={field}
+              placeholder={placeholder}
+              onChange={handleChange}
+              value={form[field]}
+              required={field !== "address"}
+              className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/15"
+            />
+          </label>
+        ))}
+        <label htmlFor="comment" className="flex flex-col gap-1.5 text-sm font-medium text-slate-700">
+          Message
+          <textarea
+            id="comment"
+            name="comment"
+            onChange={handleChange}
+            value={form.comment}
+            placeholder="Enter your comments"
+            required
+            className="min-h-28 resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/15"
+          />
         </label>
-        <input type="text" id="name" name="name" placeholder="Enter Name" onChange={handleChange}   value={form.name} required/>
-
-        <label htmlFor="email" className="auth-label">
-          Email:
-        </label>
-        <input type="email" id="email" name="email" placeholder="Enter Email" onChange={handleChange}   value={form.email} required/>
-
-        <label htmlFor="phone" className="auth-label">
-          Phone:
-        </label>
-        <input type="tel" id="phone" name="phone" placeholder="Enter Phone" onChange={handleChange}   value={form.phone} required/>
-
-        <label htmlFor="address" className="auth-label">
-          Address:
-        </label>
-        <input
-          type="text"
-          id="address"
-          name="address"
-          placeholder="Enter Address"
-          onChange={handleChange}
-          value={form.address} required
-        />
-
-        <label htmlFor="comment" className="auth-label">
-          Message:
-        </label>
-        <textarea
-          id="comment"
-          name="comment"
-          onChange={handleChange}
-          value={form.comment}
-          placeholder="Enter Your Comments"
-        ></textarea>
-        <button type="submit" className="auth-button">
+        <button type="submit" className="rounded-xl bg-gradient-to-r from-indigo-500 via-teal-400 to-amber-300 px-4 py-3 font-semibold text-slate-950 shadow-lg transition hover:-translate-y-0.5">
           Send Message
         </button>
       </form>

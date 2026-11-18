@@ -1,13 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../auth/useAuth";
+import LoadingScreen from "./LoadingScreen";
 
 export default function ProtectedRoute() {
-  const token = localStorage.getItem("token");
+  const { status } = useAuth();
 
-  // if no token → go to login
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
+  if (status === "loading") return <LoadingScreen />;
+  if (status !== "authenticated") return <Navigate to="/login" replace />;
 
-  // if token exists → allow access
   return <Outlet />;
 }

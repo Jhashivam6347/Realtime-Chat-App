@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -8,29 +7,28 @@ import Practice from "./pages/Practice";
 
 import MainLayout from "./Layouts/MainLayouts";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PublicOnlyRoute from "./components/PublicOnlyRoute";
+import { AuthProvider } from "./auth/AuthProvider";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/" element={<MainLayout />}>
-
-          {/* Public routes */}
-          <Route index element={<Login />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="practice" element={<Practice />} />
-
-          {/* Protected routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="chat" element={<Chat />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route element={<PublicOnlyRoute />}>
+              <Route index element={<Login />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="chat" element={<Chat />} />
+              <Route path="practice" element={<Practice />} />
+            </Route>
           </Route>
-
-        </Route>
-
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
